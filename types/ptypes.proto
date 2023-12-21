@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option go_package = "github.com/Jimbo8702/notification_service/types";
+
+service NotificationService {
+    rpc SendUserNotification(SendNotificationRequest) returns (None);
+}
+
+message None {}
+
+message SendNotificationRequest {
+    string message = 1;
+    string title = 2;
+    string toScreen = 3;
+    string userID = 4;
+}
+

@@ -1,0 +1,6 @@
+bin
+.env
+
+firebase_service_account.json
+
+todo.txt
