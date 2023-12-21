@@ -1,7 +1,7 @@
 BINARY_NAME=myApp
 
 build: 
-	@go build -o bin/server ./notification
+	@go build -o bin/server .
 
 run: build
 	@./bin/server
