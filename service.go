@@ -11,37 +11,19 @@ import (
 type NotificationService interface {
 	SendUserNotification(ctx context.Context, userID string, data *types.Notification) error
 	SendNotificationCampaign(ctx context.Context, users []string, data *types.Notification) error
-	SaveOrUpdateDeviceID(ctx context.Context, params *types.CreateNotificationTokenParams) error
+	//add in send email
 }
 
 type FCMNotificationService struct {
-	FBClient *messaging.Client
+	fBClient *messaging.Client
 	store    NotificationTokenStore
 }
 
 func NewFCMNotificationService(client *messaging.Client, store NotificationTokenStore) NotificationService {
 	return &FCMNotificationService{
-		FBClient: client,
+		fBClient: client,
 		store: store,
 	}
-}
-
-func (s *FCMNotificationService) SaveOrUpdateDeviceID(ctx context.Context, params *types.CreateNotificationTokenParams) error {
-	exists, err := s.store.DeviceTokenExists(ctx, params.DeviceID)
-	if err != nil {
-		return err
-	}
-	if !exists {
-		token, err := types.NewNotificationToken(params)
-		if err != nil {
-			return err
-		}
-		_, err = s.store.Insert(ctx, token)
-		if err != nil {
-			return err
-		}
-	} 
-	return nil
 }
 
 func (s *FCMNotificationService) SendUserNotification(ctx context.Context, userID string, data *types.Notification) error {
@@ -50,7 +32,7 @@ func (s *FCMNotificationService) SendUserNotification(ctx context.Context, userI
 		return err
 	}
 	if len(tokens) > 0 {
-		_, err = s.FBClient.Send(ctx, &messaging.Message{
+		_, err = s.fBClient.Send(ctx, &messaging.Message{
 			Notification: &messaging.Notification{
 				Title: data.Title,
 				Body: data.Message,

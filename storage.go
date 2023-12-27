@@ -19,7 +19,6 @@ const notificationColl = "notification_tokens"
 const hours_in_a_week = 24 * 7
 
 type NotificationTokenStore interface {
-	Insert(ctx context.Context, token *types.NotificationToken) (*types.NotificationToken, error)
 	GetTokensByProfileID(ctx context.Context, id string) ([]*types.NotificationToken, error)
 	DeviceTokenExists(ctx context.Context, token string) (bool, error)
 }

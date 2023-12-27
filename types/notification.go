@@ -12,18 +12,6 @@ type Notification struct {
 	ToScreen 	string `json:"toScreen"`
 }
 
-type CreateNotificationTokenParams struct {
-	UserID 		string	`json:"userID"`
-	DeviceID 	string  `json:"deviceID"`
-}
-
-func NewNotificationToken(params *CreateNotificationTokenParams) (*NotificationToken, error) {
-	return &NotificationToken{
-		UserID: params.UserID,
-		DeviceID: params.DeviceID,
-	}, nil
-}
-
 type SendNotificationData struct {
 	ID  			string
 	DeviceID 		string

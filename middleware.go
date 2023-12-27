@@ -40,13 +40,3 @@ func (l *LogMiddleware) SendNotificationCampaign(ctx context.Context, users []st
 	return l.next.SendNotificationCampaign(ctx, users, data)
 }
 
-func (l *LogMiddleware) SaveOrUpdateDeviceID(ctx context.Context, params *types.CreateNotificationTokenParams) (err error) {
-	defer func(start time.Time) {
-		logrus.WithFields(logrus.Fields{
-			"took": time.Since(start),
-			"err": err,
-			"user_id": params.UserID,
-		}).Info("saving user deviceID")
-	}(time.Now())
-	return l.next.SaveOrUpdateDeviceID(ctx, params)
-} 
